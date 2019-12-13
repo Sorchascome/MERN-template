@@ -17,8 +17,7 @@ const compSchema = new Schema({
   },
 
   desc: {
-    type: String,
-    minlength: 3
+    type: String
   },
 
 }, {

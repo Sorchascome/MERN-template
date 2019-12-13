@@ -8,7 +8,7 @@ import CompController from '../../controllers/compController'
 export default function MernLayout(props) {
     return (
         <div>
-            <div style={{display: 'inline-flex'}}>
+            <div style={{display: 'flex', flexFlow: 'row wrap'}}>
                 {props.components.map(comp => <MernComponent getComponents={props.getComponents} key={comp.compName} {...comp}/>)}
             </div>
             <hr/>

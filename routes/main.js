@@ -17,11 +17,7 @@ router.route('/').get((req, res) => {
 })
 
 router.route('/add').post(upload.single('file'), (req, res) => {
-    console.log(req)
-    const newComp = new Component()
-    
-    newComp.compName = req.body.compName
-    newComp.desc = req.body.desc
+    const newComp = new Component(req.body)
     
     newComp.image = {
         data: fs.readFileSync(req.file.path),
