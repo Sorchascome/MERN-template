@@ -10,8 +10,8 @@
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "cd client && npm i",
-    "client": "cd client && npm run",
-    "clear": "rm -R uploads"
+    "client": "cd client && npm run react-scripts start",
+    "clear": "rm -rvf uploads/*"
   },
   "dependencies": {
     "cors": "^2.8.5",

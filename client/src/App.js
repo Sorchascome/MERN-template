@@ -9,15 +9,13 @@ export default class App extends Component {
   constructor(props) {
     super(props)
   
-    this.state = {
-      components: []
-    }
+    this.state = {}
 
     this.getComponents = this.getComponents.bind(this)
   }
 
   getComponents = () => {
-    CompController.getComponents(components => this.setState({components}))
+    CompController.getComponents(components => this.setState({components: components.sort((a,b) => a.order - b.order)}))
     this.forceUpdate()
   }
 

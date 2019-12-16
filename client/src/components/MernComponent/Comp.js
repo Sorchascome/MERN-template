@@ -3,6 +3,7 @@ import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, ButtonGroup, Input
   } from 'reactstrap'
+
 import MernTools from '../Tools/MernTools'
 
 import CompController from '../../controllers/compController'
@@ -18,7 +19,7 @@ export default function Comp(props) {
     if (!edit) return (
         <Card style={{margin: '2vw', width: '20vw', height: 'fit-content', display: 'flex', flexDirection: 'row'}}>
 
-            <CardImg style={{maxWidth: '30%', height: '4vw', margin: 'auto 1vw', objectFit: 'contain'}} src={imgstring}/>
+            <CardImg style={{maxWidth: '20%', height: '4vw', margin: 'auto 1vw', objectFit: 'contain'}} src={imgstring}/>
 
             <CardBody>
 

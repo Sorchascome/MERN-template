@@ -4,7 +4,6 @@ const express = require('express'),
       mongoose = require('mongoose'),
       mainRouter = require('./routes/main')
 
-
 const PORT = process.env.PORT || 5000,
       uri = 'mongodb+srv://defaultuser:dalMSmubLYpkykYa@brcluster-bzf8f.mongodb.net/mern?retryWrites=true&w=majority',
       app = express()

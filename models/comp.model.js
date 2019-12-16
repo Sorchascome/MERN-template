@@ -20,10 +20,24 @@ const compSchema = new Schema({
     type: String
   },
 
+  order: {
+    type: Number
+  }
+
 }, {
   timestamps: true,
-});
+})
 
-const MernComponent = mongoose.model('Component', compSchema);
+compSchema.pre('save', function(next) {
+  if (!this.order) {
+    let comp = this
+    MernComponent.countDocuments({}, function(err, count) {
+      comp.order = count++
+      next()
+    })
+  }
+})
+
+const MernComponent = mongoose.model('Component', compSchema)
 
 module.exports = MernComponent;

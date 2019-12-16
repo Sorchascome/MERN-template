@@ -1,7 +1,7 @@
-const getComponents = (stateChange) => {
-    let url = 'http://localhost:5000/'
+const uri = 'http://localhost:5000/'
 
-    fetch(url, {
+const getComponents = (stateChange) => {
+    fetch(uri, {
       method: 'get',
       mode: 'cors'
     })
@@ -15,60 +15,87 @@ const getComponents = (stateChange) => {
 }
 
 const addComponent = (comp, callback) => {
-    let url = 'http://localhost:5000/add',
-    data = new FormData()
-    data.append('file', comp.file)
-    data.append('compName', comp.compName)
-    data.append('desc', comp.desc)
+  let url = uri + 'add',
+  data = new FormData()
+  data.append('file', comp.file)
+  data.append('compName', comp.compName)
+  data.append('desc', comp.desc)
 
-    fetch(url, {
-        method: 'post',
-        mode: 'cors',
-        body: data
-      }).then(response => {
-        return response.json();
-      }).then(data => {
-        console.log(data)
-        callback()
-      });
-
+  fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      body: data
+    }).then(response => {
+      return response.json();
+    }).then(data => {
+      console.log(data)
+      callback()
+    });
 }
 
-const deleteComponent = (comp) => {
-    let url = 'http://localhost:5000/remove'
+const deleteComponent = (comp, callback) => {
+  let url = uri + 'remove',
 
-    fetch(url, {
-        method: 'post',
-        mode: 'cors',
-        body: JSON.stringify({_id: comp._id})
-      }).then(response => {
-        return response.json()
-      }).then(data => {
-        console.log(data)
-        comp.getComponents()
-    })
+  data = new FormData()
+  data.append('_id', comp._id)
+  data.append('order', comp.order)
+
+  fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      body: data
+    }).then(response => {
+      return response.json()
+    }).then(data => {
+      console.log(data)
+      comp.getComponents()
+  })
 }
 
 const updateComponent = (id, comp, callback) => {
-    let url = 'http://localhost:5000/update',
-    
-      data = new FormData()
-      data.append('_id', id)
-      data.append('file', comp.file)
-      data.append('compName', comp.compName)
-      data.append('desc', comp.desc)
+  let url = uri + 'update',
 
-    fetch(url, {
-        method: 'post',
-        mode: 'cors',
-        body: data
-      }).then(response => {
-        return response.json()
-      }).then(data => {
-        console.log(data)
-        callback()
-    })
+  data = new FormData()
+  data.append('_id', id)
+  data.append('file', comp.file)
+  data.append('compName', comp.compName)
+  data.append('desc', comp.desc)
+  data.append('order', comp.order)
+
+  fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      body: data
+    }).then(response => {
+      return response.json()
+    }).then(data => {
+      console.log(data)
+      callback()
+  })
 }
 
-export default { getComponents, addComponent, deleteComponent, updateComponent }
+const sortComponents = async (components, callback) => {
+  let url = uri + 'sort'
+
+  await Promise.all(components.map(async (comp) => {
+      let data = new FormData()
+      data.append('_id', comp._id)
+      data.append('order', comp.order)
+      const reOrdered = await postCompOrder(data)
+      return reOrdered
+    })
+  ).then(() => callback())
+
+  async function postCompOrder(data) {
+    fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      body: data
+    }).then(response => {
+      return response.json()
+    })
+  }
+}
+
+export default { getComponents, addComponent, deleteComponent, updateComponent, sortComponents }
 
