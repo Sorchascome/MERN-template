@@ -25,7 +25,8 @@ export default class MernLayout extends Component {
         super(props)
     
         this.state = {
-            items: this.props.components
+            items: this.props.components,
+            active: true
         }
 
         this.onDragEnd = this.onDragEnd.bind(this)
@@ -40,12 +41,14 @@ export default class MernLayout extends Component {
           this.state.items,
           result.source.index,
           result.destination.index
-        ),
-        newOrderedItems = items.filter((item, index) => this.props.components[index].order !== item.order)
-        newOrderedItems.map((item, index) => item.order = index)
+        )
+
+        items.map((item, index) => item.order = index)
+        let newOrderedItems = items.filter((item, index) => this.props.components[index].order !== item.order)
         
-        this.setState({items}, () => compController.sortComponents(newOrderedItems, () => console.log('sorted')))
-        
+        this.setState({items, active: false}, 
+            () => compController.sortComponents(newOrderedItems, 
+                () => this.setState({ active: true })))
     }
 
     componentDidUpdate(prevProps) {
@@ -55,13 +58,14 @@ export default class MernLayout extends Component {
     render() {
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable droppableId="droppable" direction="horizontal">
+                <Droppable style={this.state.active ? { pointerEvents: 'none'} : {}} droppableId="droppable" direction="horizontal">
                     {(provided, snapshot) => (
                         <div style={listStyle} ref={provided.innerRef} {...provided.droppableProps}>
                             {this.state.items.map((comp, index) => 
                                 <Draggable key={comp._id} draggableId={comp._id} index={index}>
                                     {(provided, snapshot) => 
-                                        <div ref={provided.innerRef}
+                                        <div 
+                                            ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}>
                                                 <MernComponent getComponents={this.props.getComponents} {...comp}/>

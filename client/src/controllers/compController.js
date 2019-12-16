@@ -77,6 +77,16 @@ const updateComponent = (id, comp, callback) => {
 const sortComponents = async (components, callback) => {
   let url = uri + 'sort'
 
+  async function postCompOrder(data) {
+    await fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      body: data
+    }).then(response => {
+      return response.json()
+    })
+  }
+
   await Promise.all(components.map(async (comp) => {
       let data = new FormData()
       data.append('_id', comp._id)
@@ -86,15 +96,6 @@ const sortComponents = async (components, callback) => {
     })
   ).then(() => callback())
 
-  async function postCompOrder(data) {
-    fetch(url, {
-      method: 'post',
-      mode: 'cors',
-      body: data
-    }).then(response => {
-      return response.json()
-    })
-  }
 }
 
 export default { getComponents, addComponent, deleteComponent, updateComponent, sortComponents }

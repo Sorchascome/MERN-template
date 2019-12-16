@@ -14,9 +14,8 @@ export default class App extends Component {
     this.getComponents = this.getComponents.bind(this)
   }
 
-  getComponents = () => {
-    CompController.getComponents(components => this.setState({components: components.sort((a,b) => a.order - b.order)}))
-    this.forceUpdate()
+  getComponents = async () => {
+    CompController.getComponents( components => this.setState({components: components.sort((a,b) => a.order - b.order)} ) )
   }
 
   componentDidMount() {
