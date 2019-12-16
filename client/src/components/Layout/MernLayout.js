@@ -68,7 +68,7 @@ export default class MernLayout extends Component {
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}>
-                                                <MernComponent getComponents={this.props.getComponents} {...comp}/>
+                                                <MernComponent style={{boxShadow: snapshot.isDragging ? '10px 10px 8px 0px rgba(0,0,0,0.3)' : '3px 3px 2px 2px rgba(0,0,0,0.5)'}} getComponents={this.props.getComponents} {...comp}/>
                                         </div> }
                                 </Draggable>
                             )}

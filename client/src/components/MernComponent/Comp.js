@@ -17,7 +17,7 @@ export default function Comp(props) {
     let imgstring = 'data:image/png;base64,' + window.btoa(binary)
 
     if (!edit) return (
-        <Card style={{margin: '2vw', width: '20vw', height: 'fit-content', display: 'flex', flexDirection: 'row'}}>
+        <Card style={{transition: 'all 0.3s ease-in-out', margin: '2vw', width: '20vw', height: 'fit-content', display: 'flex', flexDirection: 'row', ...props.style}}>
 
             <CardImg style={{maxWidth: '20%', height: '4vw', margin: 'auto 1vw', objectFit: 'contain'}} src={imgstring}/>
 
